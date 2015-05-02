@@ -1,5 +1,7 @@
 angular.module('SampleApp').directive 'maze', (MazeGenerator) ->
+  templateUrl: 'assets/templates/maze.html'
   link: (scope, elem, attrs)->
+    scope.blocks = []
     jElem = $(elem[0])
 
     settings =
@@ -19,20 +21,15 @@ angular.module('SampleApp').directive 'maze', (MazeGenerator) ->
 
     for row in [0..settings.horizontalBlocks - 1]
       for column in [0..settings.verticalBlocks - 1]
-        block = $(document.createElement( "div" ))
+        scope.blocks.push
+          border:
+            top: if mazeWalls.verti[row-1]?[column]? then '0px'
+            bottom: if mazeWalls.verti[row][column]? then '0px'
+            left: if mazeWalls.horiz[row][column-1]? then '0px'
+            right: if mazeWalls.horiz[row][column]? then '0px'
+          width: blockWidth
+          height: blockHeight
 
-        block.addClass('maze__cell')
-        block.width (blockWidth + '%')
-        block.height (blockHeight + '%')
-
-        block.css {
-          'border-top': if mazeWalls.verti[row-1]?[column]? then '0px'
-          'border-bottom': if mazeWalls.verti[row][column]? then '0px'
-          'border-left': if mazeWalls.horiz[row][column-1]? then '0px'
-          'border-right': if mazeWalls.horiz[row][column]? then '0px'
-        }
-
-        jElem.append block
 
 
 

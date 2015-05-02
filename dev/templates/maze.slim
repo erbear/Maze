@@ -1,0 +1,9 @@
+.maze__cell(
+  ng-repeat="block in blocks"
+  style="
+    border-top: {{block.border.top}};
+    border-bottom: {{block.border.bottom}};
+    border-left: {{block.border.left}};
+    border-right: {{block.border.right}};
+    width: {{block.width}}%;
+    height: {{block.height}}%;")

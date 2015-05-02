@@ -7,5 +7,5 @@
     border-right: {{border.right(block.row, block.column)}};
     width: {{blockWidth}}%;
     height: {{blockHeight}}%;")
-  .maze__hero
+  .maze__hero ng-if="isOnCell(block.row, block.column)"
     | o

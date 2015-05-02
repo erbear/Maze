@@ -1,3 +1,4 @@
 angular.module('SampleApp', [
-  'ui.router'
+  'ui.router',
+  'cfp.hotkeys'
 ]);

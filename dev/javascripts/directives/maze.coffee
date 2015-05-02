@@ -1,12 +1,12 @@
-angular.module('SampleApp').directive 'maze', (MazeGenerator) ->
+angular.module('SampleApp').directive 'maze', (MazeGenerator, hotkeys) ->
   templateUrl: 'assets/templates/maze.html'
   link: (scope, elem, attrs)->
     scope.blocks = []
     jElem = $(elem[0])
 
     settings =
-      height: 300
-      width: 300
+      height: 600
+      width: 600
       verticalBlocks: 10
       horizontalBlocks: 10
 
@@ -35,9 +35,53 @@ angular.module('SampleApp').directive 'maze', (MazeGenerator) ->
           row: row
           column: column
 
+    hero =
+      row: 0
+      column: 0
+
+      moveLeft: ->
+        return unless scope.border.left(@row, @column) && @column>0
+        @column -= 1
+
+      moveRight: ->
+        return unless scope.border.right(@row, @column) && @column<settings.horizontalBlocks
+        @column += 1
+
+      moveUp: ->
+        return unless scope.border.top(@row, @column) && @row>0
+        @row -= 1
+
+      moveDown: ->
+        return unless scope.border.bottom(@row, @column) && @row<settings.verticalBlocks
+        @row += 1
+
+    scope.isOnCell = (row, column)->
+      row == hero.row && column == hero.column
 
 
+    hotkeys.add
+      combo: 'up',
+      description: 'Description goes here',
+      callback: (event, hotkey)->
+        hero.moveUp()
 
+    hotkeys.add
+      combo: 'down',
+      description: 'Description goes here',
+      callback: (event, hotkey)->
+        hero.moveDown()
+
+    hotkeys.add
+      combo: 'left',
+      description: 'Description goes here',
+      callback: (event, hotkey)->
+        hero.moveLeft()
+
+    hotkeys.add
+      combo: 'right',
+      description: 'Description goes here',
+      callback: (event, hotkey)->
+        hero.moveRight()
 
 
 

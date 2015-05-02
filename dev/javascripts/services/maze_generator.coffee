@@ -1,5 +1,5 @@
 angular.module('SampleApp').service 'MazeGenerator', ->
-  generateMaze: (x, y) ->
+  generate: (x, y) ->
     n = x * y - 1
     if n < 0
       alert "illegal maze dimensions"
@@ -52,3 +52,39 @@ angular.module('SampleApp').service 'MazeGenerator', ->
     y: y
     horiz: horiz
     verti: verti
+  display: (m) ->
+    text = []
+    j = 0
+
+    while j < m.x * 2 + 1
+      line = []
+      if 0 is j % 2
+        k = 0
+
+        while k < m.y * 4 + 1
+          if 0 is k % 4
+            line[k] = "+"
+          else if j > 0 and m.verti[j / 2 - 1][Math.floor(k / 4)]
+            console.log 'verti['+ (j / 2 - 1) + ']['+ Math.floor(k / 4)+'] = ' + m.verti[j / 2 - 1][Math.floor(k / 4)]
+            line[k] = " "
+          else
+            line[k] = "-"
+          k++
+      else
+        k = 0
+
+        while k < m.y * 4 + 1
+          if 0 is k % 4
+            if k > 0 and m.horiz[(j - 1) / 2][k / 4 - 1]
+              console.log 'horiz['+ ((j - 1) / 2) + ']['+ Math.floor(k / 4 - 1)+'] = ' + m.horiz[(j - 1) / 2][k / 4 - 1]
+              line[k] = " "
+            else
+              line[k] = "|"
+          else
+            line[k] = " "
+          k++
+      line[1] = line[2] = line[3] = " "  if 0 is j
+      line[4 * m.y] = " "  if m.x * 2 - 1 is j
+      text.push line.join("") + "\r\n"
+      j++
+    text.join ""

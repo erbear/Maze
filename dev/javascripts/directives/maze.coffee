@@ -16,19 +16,24 @@ angular.module('SampleApp').directive 'maze', (MazeGenerator) ->
     jElem.width settings.height
     jElem.height settings.width
 
-    blockHeight = 100 / settings.verticalBlocks
-    blockWidth = 100 / settings.horizontalBlocks
+    scope.blockHeight = 100 / settings.verticalBlocks
+    scope.blockWidth = 100 / settings.horizontalBlocks
+
+    scope.border =
+      left: (row, column)->
+        if mazeWalls.horiz[row][column-1]? then '0px'
+      right: (row, column)->
+        if mazeWalls.horiz[row][column]? then '0px'
+      top: (row, column)->
+        if mazeWalls.verti[row-1]?[column]? then '0px'
+      bottom: (row, column)->
+        if mazeWalls.verti[row][column]? then '0px'
 
     for row in [0..settings.horizontalBlocks - 1]
       for column in [0..settings.verticalBlocks - 1]
         scope.blocks.push
-          border:
-            top: if mazeWalls.verti[row-1]?[column]? then '0px'
-            bottom: if mazeWalls.verti[row][column]? then '0px'
-            left: if mazeWalls.horiz[row][column-1]? then '0px'
-            right: if mazeWalls.horiz[row][column]? then '0px'
-          width: blockWidth
-          height: blockHeight
+          row: row
+          column: column
 
 
 

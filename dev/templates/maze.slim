@@ -1,9 +1,11 @@
 .maze__cell(
   ng-repeat="block in blocks"
   style="
-    border-top: {{block.border.top}};
-    border-bottom: {{block.border.bottom}};
-    border-left: {{block.border.left}};
-    border-right: {{block.border.right}};
-    width: {{block.width}}%;
-    height: {{block.height}}%;")
+    border-top: {{border.top(block.row, block.column)}};
+    border-bottom: {{border.bottom(block.row, block.column)}};
+    border-left: {{border.left(block.row, block.column)}};
+    border-right: {{border.right(block.row, block.column)}};
+    width: {{blockWidth}}%;
+    height: {{blockHeight}}%;")
+  .maze__hero
+    | o

@@ -38,13 +38,16 @@ angular.module('SampleApp').directive 'maze', (MazeGenerator, hotkeys) ->
     hero =
       row: 0
       column: 0
+      right: false
 
       moveLeft: ->
         return unless scope.border.left(@row, @column) && @column>0
+        @right = false
         @column -= 1
 
       moveRight: ->
         return unless scope.border.right(@row, @column) && @column<settings.horizontalBlocks
+        @right = true
         @column += 1
 
       moveUp: ->
@@ -57,6 +60,9 @@ angular.module('SampleApp').directive 'maze', (MazeGenerator, hotkeys) ->
 
     scope.isOnCell = (row, column)->
       row == hero.row && column == hero.column
+
+    scope.recentRightMove = ->
+      hero.right
 
 
     hotkeys.add
